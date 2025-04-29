@@ -238,6 +238,14 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 			return next != null;
 		}
 
+		public void add() {
+			// TODO Kelsi
+		}
+
+		public void set() {
+			// TODO Kelsi
+		}
+
 		@Override
 		public E next() {
 			// TODO Tyra
