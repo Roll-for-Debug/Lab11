@@ -2,8 +2,8 @@
 
 ## Things to do
 
-- [ ] Create class IUDoubleLinkedList
-- [ ] Implement IndexedUnsortedList
+- [x] Create class IUDoubleLinkedList
+- [x] Implement IndexedUnsortedList
 - [ ] ListTester: Uncomment doubleLinkedList listToUse
 - [ ] ListTester: set listToUse
 - [ ] Update ListTester to include ListIterator
