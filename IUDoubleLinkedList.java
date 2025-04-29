@@ -75,7 +75,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         if (isEmpty()) {
 			throw new NoSuchElementException();
 		}
-		LinearNode<E> current = front, previous = null;
+		BidirectionalNode<E> current = front, previous = null;
 		while (current != null && !current.getElement().equals(element)) {
 			previous = current;
 			current = current.getNext();
@@ -161,8 +161,10 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
     @Override
     public E first() { // Tyler
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'first'");
+        if (isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		return front.getElement();
     }
 
     @Override
