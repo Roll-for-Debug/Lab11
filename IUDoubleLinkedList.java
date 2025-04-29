@@ -1,7 +1,7 @@
 import java.util.Iterator;
 import java.util.ListIterator;
 
-public class IUDoubleLinkedList implements IndexedUnsortedList {
+public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
     @Override
     public void addToFront(Object element) { // Colin
