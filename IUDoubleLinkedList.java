@@ -1,5 +1,6 @@
 import java.util.Iterator;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
@@ -17,8 +18,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
     @Override
     public void add(E element) { // Tyler
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'add'");
+        addToRear(element);
     }
 
     @Override
@@ -47,8 +47,19 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
     @Override
     public E remove(E element) { // Tyler
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+        if (isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		LinearNode<E> current = front, previous = null;
+		while (current != null && !current.getElement().equals(element)) {
+			previous = current;
+			current = current.getNext();
+		}
+		// Matching element not found
+		if (current == null) {
+			throw new NoSuchElementException();
+		}
+		return removeElement(previous, current);
     }
 
     @Override
