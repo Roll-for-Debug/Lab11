@@ -1,3 +1,4 @@
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
@@ -6,6 +7,13 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
     private BidirectionalNode<E> front, rear;
     private int count;
 	private int modCount;
+
+
+    public IUDoubleLinkedList() {
+        front = rear = null;
+        count = 0;
+        modCount = 0;
+    }
 
     @Override
     public void addToFront(E element) { // Colin
@@ -83,25 +91,6 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
 
-    private E removeElement(BidirectionalNode<E> previous, BidirectionalNode<E> current) { // given, don't much
-		// Grab element
-		E result = current.getElement();
-		// If not the first element in the list
-		if (previous != null) {
-			previous.setNext(current.getNext());
-		} else { // If the first element in the list
-			front = current.getNext();
-		}
-		// If the last element in the list
-		if (current.getNext() == null) {
-			rear = previous;
-		}
-		count--;
-		modCount++;
-		// System.out.println(result);
-		return result;
-	}
-
     @Override
     public void set(int index, E element) { // Tyra
         // TODO Auto-generated method stub
@@ -177,11 +166,98 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         return count;
     }
 
+    private E removeElement(BidirectionalNode<E> previous, BidirectionalNode<E> current) { // given, don't much
+		// Grab element
+		E result = current.getElement();
+		// If not the first element in the list
+		if (previous != null) {
+			previous.setNext(current.getNext());
+		} else { // If the first element in the list
+			front = current.getNext();
+		}
+		// If the last element in the list
+		if (current.getNext() == null) {
+			rear = previous;
+		}
+		count--;
+		modCount++;
+		// System.out.println(result);
+		return result;
+	}
+    @Override
+        public String toString() {
+		// Review Tyler
+		String result = "[";
+		BidirectionalNode<E> current = front;
+		while (current != null) {
+			result += current.getElement();
+			current = current.getNext();
+			if (current != null) {
+				result += ", ";
+			}
+		}
+		return result += "]";
+	}
+
     @Override
     public Iterator iterator() { // Tyler
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+        return new DLLIterator();
     }
+
+    private class DLLIterator implements Iterator<E> {
+		private BidirectionalNode<E> previous;
+		private BidirectionalNode<E> current;
+		private BidirectionalNode<E> next;
+		private int iterModCount;
+		private boolean didNext;
+
+		/** Creates a new iterator for the list */
+		public DLLIterator() {
+			previous = null;
+			current = null;
+			next = front;
+			iterModCount = modCount;
+			didNext = false;
+		}
+
+		@Override
+		public boolean hasNext() {
+			// TODO Kelsi
+			return next != null;
+		}
+
+		@Override
+		public E next() {
+			// TODO Tyra
+			if (iterModCount != modCount) { throw new ConcurrentModificationException(); }
+			if (next == null) { throw new NoSuchElementException(); }
+
+			previous = current;
+			current = next;
+			if (current.getNext() != null){
+				next = next.getNext();
+			} else {
+				next = null;
+			}
+			didNext = true; // Allow remove
+			// System.out.println("__CURRENT__:" + current.getElement());
+			return current.getElement();
+		}
+
+		@Override
+		public void remove() { // Colin
+			if (!didNext) { throw new IllegalStateException(); }
+			if (current == front) {
+				removeFirst();
+			} else if (current == rear) {
+				removeLast();
+			} else {
+				removeElement(previous, current);
+			}
+			didNext = false; // disallow remove until next, next()
+			iterModCount++;
+		}
+	}
 
     @Override
     public ListIterator listIterator() { // Kelsi
