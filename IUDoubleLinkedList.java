@@ -1,18 +1,40 @@
 import java.util.Iterator;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
+    private BidirectionalNode<E> front, rear;
+    private int count;
+	private int modCount;
 
     @Override
     public void addToFront(E element) { // Colin
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addToFront'");
+        BidirectionalNode<E> node = new BidirectionalNode<E>(element);
+		if (isEmpty()) {
+			front = rear = node;
+			count++;
+			return;
+		}
+        front.setPrevious(node);
+		node.setNext(front);
+		front = node; // One for the garbage man
+		count++;
+		modCount++;
     }
 
     @Override
-    public void addToRear(E element) { // Zion
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addToRear'");
+    public void addToRear(E element) { // REVIEW Zion
+        BidirectionalNode<E> newNode = new BidirectionalNode<E>(element);
+		if (isEmpty()) {
+			front = rear = newNode;
+			count++;
+		} else {
+			rear.setNext(newNode);
+            newNode.setPrevious(rear);
+			rear = rear.getNext();
+			newNode = null;
+			count++;
+		}
     }
 
     @Override
@@ -35,14 +57,18 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
     @Override
     public E removeFirst() { // Colin
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeFirst'");
+        if (front == null) {
+			throw new NoSuchElementException();
+		}
+		return remove(front.getElement());
     }
 
     @Override
     public E removeLast() { // Zion
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeLast'");
+        if (isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		return remove(rear.getElement());
     }
 
     @Override
@@ -57,6 +83,25 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
 
+    private E removeElement(BidirectionalNode<E> previous, BidirectionalNode<E> current) { // given, don't much
+		// Grab element
+		E result = current.getElement();
+		// If not the first element in the list
+		if (previous != null) {
+			previous.setNext(current.getNext());
+		} else { // If the first element in the list
+			front = current.getNext();
+		}
+		// If the last element in the list
+		if (current.getNext() == null) {
+			rear = previous;
+		}
+		count--;
+		modCount++;
+		// System.out.println(result);
+		return result;
+	}
+
     @Override
     public void set(int index, E element) { // Tyra
         // TODO Auto-generated method stub
@@ -65,14 +110,43 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
     @Override
     public E get(int index) { // Colin
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'get'");
+        if (isEmpty()) {
+			throw new IndexOutOfBoundsException();
+		}
+		if (index < 0 || index > count) {
+			throw new IndexOutOfBoundsException();
+		}
+		BidirectionalNode<E> current = front;
+		int i = 0;
+		while (current != null && i < index) {
+			current = current.getNext();
+			i++;
+		}
+		if (current == null) {
+			throw new IndexOutOfBoundsException();
+		} // Not sure if this is necessary - Colin
+		modCount++;
+		return current.getElement();
     }
 
     @Override
     public int indexOf(E element) { // Zion
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'indexOf'");
+        if (isEmpty()) {
+			return -1;
+		}
+		BidirectionalNode<E> temp = this.front;
+		int indexCounter = 0;
+		do {
+			if (temp.getElement().equals(element)) {
+				return indexCounter;
+			}
+			temp = temp.getNext();
+			indexCounter++;
+			if (temp == null) {
+				return -1;
+			}
+		} while (!(temp == null));
+		return -1;
     }
 
     @Override
@@ -95,14 +169,12 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
     @Override
     public boolean isEmpty() { // Colin
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+        return count == 0;
     }
 
     @Override
     public int size() { // Zion
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return count;
     }
 
     @Override
