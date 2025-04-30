@@ -45,6 +45,22 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 		}
     }
 
+	private BidirectionalNode<E> findNodeIndex(int index) {
+        if (index < 0 || index >= count) {
+            throw new IndexOutOfBoundsException();
+        }
+
+		BidirectionalNode<E> current = front;
+        for (int i = 0; i < count; i++) {
+            if (i == index) {
+                return current;
+            }
+            current = current.getNext();
+        }
+
+        return null;
+    }
+	
     @Override
     public void add(E element) { // Tyler
         addToRear(element);
@@ -56,10 +72,30 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         throw new UnsupportedOperationException("Unimplemented method 'addAfter'");
     }
 
+	private void insertNode(BidirectionalNode<E> target, E element) {
+        if (front == target) {
+            addToFront(element);
+        }
+        else {
+            BidirectionalNode<E> newNode = new BidirectionalNode(element);
+            newNode.setPrevious(target.getPrevious());
+            newNode.setNext(target);
+            target.getPrevious().setNext(newNode);
+            target.setPrevious(newNode);
+            count++;
+            modCount++;
+        }
+    }
+
+
     @Override
     public void add(int index, E element) { // Tyra
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'add'");
+        if (index == count) {
+			addToRear(element);
+		}
+		else {
+			insertNode(findNodeIndex(index), element);
+		}
     }
 
     @Override
@@ -103,8 +139,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
     @Override
     public void set(int index, E element) { // Tyra
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'set'");
+		findNodeIndex(index).setElement(element);
     }
 
     @Override
@@ -164,8 +199,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
     @Override
     public boolean contains(E target) { // Tyra
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'contains'");
+        return findNodeValue(target).x != null;  //need to make a findNodeValue
     }
 
     @Override
@@ -286,9 +320,8 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
     }
 
     @Override
-    public ListIterator listIterator(int startingIndex) { // Tyra
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listIterator'");
+    public ListIterator<E> listIterator(int startingIndex) { // Tyra
+        return new DLLListIterator(0); // thought this would make sense
     }
 
 }
