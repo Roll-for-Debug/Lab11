@@ -321,7 +321,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
     @Override
     public ListIterator<E> listIterator(int startingIndex) { // Tyra
-        return new DLLListIterator(0); // thought this would make sense
+        return new DLLListIterator(0); // thought this would make sense unless its DLLIterator
     }
 
 }
