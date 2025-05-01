@@ -43,7 +43,6 @@
 
 ## Liveshare
 
-https://prod.liveshare.vsengsaas.visualstudio.com/join?E065F129E852E8C1E2E744FBA409F729848C
-
+https://prod.liveshare.vsengsaas.visualstudio.com/join?89CF9351792F30F6708D30BA7980649D251F
 
 ## Complete scenarios 14 and 47
