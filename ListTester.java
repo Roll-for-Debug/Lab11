@@ -1012,7 +1012,7 @@ public class ListTester {
 				printTest(scenarioName + "_testListIter1PreviousIndex",testListIterPreviousIndex(WrapIt.prep(scenario.build(),1).getListIterator(),0, Result.MatchingValue));
 				printTest(scenarioName + "_testListIter0SetX",testListIterSet(WrapIt.prep(scenario.build(),0).getListIterator(),ELEMENT_X, Result.IllegalState));
 				printTest(scenarioName + "_testListIter0Remove",printTest(scenarioName+"_testGet0", testGet(scenario.build(), 0,contents[0],Result.MatchingValue));
-				testListIterRemove(WrapIt.prep(scenario.build(),0).getListIterator(),Result.IllegalState));
+					testListIterRemove(WrapIt.prep(scenario.build(),0).getListIterator(),Result.IllegalState));
 				printTest(scenarioName + "_testListIter0NextSetX",testListIterSet(WrapIt.prep(scenario.build(),0).next().getListIterator(),ELEMENT_X, Result.NoException));
 				printTest(scenarioName + "_testListIter0NextRemove",testListIterRemove(WrapIt.prep(scenario.build(),0).next().getListIterator(),Result.NoException));
 				printTest(scenarioName + "_testListIter1PreviousSetX",printTest(scenarioName+"_testFirst", testFirst(scenario.build(), contents[0],Result.MatchingValue));
