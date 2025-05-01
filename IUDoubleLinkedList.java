@@ -293,8 +293,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 			} else {
 				next = null;
 			}
-			didNext = true; // Allow remove
-			// System.out.println("__CURRENT__:" + current.getElement());
+			didNext = true;
 			return current.getElement();
 		}
 
