@@ -60,7 +60,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
         return null;
     }
-	
+
     @Override
     public void add(E element) { // Tyler
         addToRear(element);
@@ -320,7 +320,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
     @Override
     public ListIterator<E> listIterator(int startingIndex) { // Tyra
-        return new DLLListIterator(0); // thought this would make sense unless its DLLIterator
+        return new DLLIterator(0); // thought this would make sense unless its DLLIterator
     }
 
 }

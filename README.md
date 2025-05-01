@@ -15,13 +15,13 @@
 
 ### DLLIter Scenarios (New in this lab)
 
-- [ ] 57 TODO Colin
-- [ ] 60 TODO Zion
+- [x] 57 TODO Colin
+- [x] 60 TODO Zion
 - [ ] 66 TODO Tyler
 - [ ] 71 TODO Kelsi
 - [ ] 87 TODO Tyra
 - [ ] 90 TODO Colin
-- [ ] 96 TODO Zion
+- [x] 96 TODO Zion
 - [ ] 99 TODO Tyler
 
 ### Missed Scenarios
