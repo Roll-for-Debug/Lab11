@@ -92,7 +92,6 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         }
     }
 
-
     @Override
     public void add(int index, E element) { // Tyra
         if (index == count) {
@@ -138,8 +137,10 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
     @Override
     public E remove(int index) { // Kelsi
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+		// Checking index & if it is valid 
+		if (index < 0 || index >= count) {
+			throw new IndexOutOfBoundsException();
+		}
     }
 
     @Override

@@ -19,8 +19,9 @@ public class ListTester {
 		goodList, badList, arrayList, singleLinkedList, doubleLinkedList
 	};
 
-	// TODO: THIS IS WHERE YOU CHOOSE WHICH LIST TO TEST
-	private final static ListToUse LIST_TO_USE = ListToUse.singleLinkedList;
+	// setting listToUse
+	private static final ListToUse LIST_TO_USE = ListToUse.doubleLinkedList; 
+	
 
 	// possible results expected in tests
 	private enum Result {
@@ -1011,6 +1012,8 @@ public class ListTester {
 				printTest(scenarioName + "_testListIter0PreviousIndex",testListIterPreviousIndex(WrapIt.prep(scenario.build(),0).getListIterator(),-1, Result.MatchingValue));
 				printTest(scenarioName + "_testListIter1PreviousIndex",testListIterPreviousIndex(WrapIt.prep(scenario.build(),1).getListIterator(),0, Result.MatchingValue));
 				printTest(scenarioName + "_testListIter0SetX",testListIterSet(WrapIt.prep(scenario.build(),0).getListIterator(),ELEMENT_X, Result.IllegalState));
+				
+				// Issues?
 				printTest(scenarioName + "_testListIter0Remove",printTest(scenarioName+"_testGet0", testGet(scenario.build(), 0,contents[0],Result.MatchingValue));
 					testListIterRemove(WrapIt.prep(scenario.build(),0).getListIterator(),Result.IllegalState));
 				printTest(scenarioName + "_testListIter0NextSetX",testListIterSet(WrapIt.prep(scenario.build(),0).next().getListIterator(),ELEMENT_X, Result.NoException));
