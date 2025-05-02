@@ -64,12 +64,17 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
     @Override
     public void add(E element) { // Tyler
         addToRear(element);
+
+
+		
     }
 
     @Override
     public void addAfter(E element, E target) { // Kelsi
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addAfter'");
+        //TODO STILL
+
+		count++; // Increment count of elements in list
+		modCount++; // Incrementing modification count 
     }
 
 	private void insertNode(BidirectionalNode<E> target, E element) {
@@ -193,13 +198,19 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
     @Override
     public E last() { // Kelsi
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'last'");
+		if (isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		return rear.getElement();
     }
 
     @Override
     public boolean contains(E target) { // Tyra
         return findNodeValue(target).x != null;  //need to make a findNodeValue
+		/** - Kelsi
+		 *  B
+		 * 
+		 */
     }
 
     @Override
@@ -278,6 +289,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
 		public void set() {
 			// TODO Kelsi
+			
 		}
 
 		@Override
