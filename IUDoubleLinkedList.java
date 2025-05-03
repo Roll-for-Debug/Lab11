@@ -3,11 +3,11 @@ import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+
 public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
     private BidirectionalNode<E> front, rear;
     private int count;
 	private int modCount;
-
 
     public IUDoubleLinkedList() {
         front = rear = null;
