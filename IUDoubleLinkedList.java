@@ -21,11 +21,12 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 		if (isEmpty()) {
 			front = rear = node;
 			count++;
+			modCount++;
 			return;
 		}
         front.setPrevious(node);
 		node.setNext(front);
-		front = node; // One for the garbage man
+		front = node;
 		count++;
 		modCount++;
     }
