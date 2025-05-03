@@ -101,9 +101,6 @@ public class IUSingleLinkedList<E> implements IndexedUnsortedList<E> {
 		}
 		count++;
 		modCount++;
-
-
-
 	}
 
 	@Override

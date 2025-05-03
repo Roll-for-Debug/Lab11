@@ -20,8 +20,8 @@ public class ListTester {
 	};
 
 	// setting listToUse
-	private static final ListToUse LIST_TO_USE = ListToUse.doubleLinkedList; 
-	
+	private static final ListToUse LIST_TO_USE = ListToUse.doubleLinkedList;
+
 
 	// possible results expected in tests
 	private enum Result {
