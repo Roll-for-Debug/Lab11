@@ -82,7 +82,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
             addToFront(element);
         }
         else {
-            BidirectionalNode<E> newNode = new BidirectionalNode(element);
+            BidirectionalNode<E> newNode = new BidirectionalNode<E>(element);
             newNode.setPrevious(target.getPrevious());
             newNode.setNext(target);
             target.getPrevious().setNext(newNode);
