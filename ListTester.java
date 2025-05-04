@@ -88,7 +88,7 @@ public class ListTester {
 		}
 		switch (LIST_TO_USE) {
 			case doubleLinkedList:
-				SUPPORTS_LIST_ITERATOR = true;
+				SUPPORTS_LIST_ITERATOR = true; //TODO Important TODO TODO TODO set to true
 				break;
 			default:
 				SUPPORTS_LIST_ITERATOR = false;
@@ -325,9 +325,9 @@ public class ListTester {
 			case singleLinkedList:
 				listToUse = new IUSingleLinkedList<Integer>();
 				break;
-			// case doubleLinkedList:
-			// listToUse = new IUDoubleLinkedList<Integer>();
-			// break;
+			case doubleLinkedList:
+				listToUse = new IUDoubleLinkedList<Integer>();
+				break;
 			default:
 				listToUse = null;
 		}
