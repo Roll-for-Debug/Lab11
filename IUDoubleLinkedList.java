@@ -262,6 +262,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 			if (current != null) {
 				result += ", ";
 			}
+			current = current.getNext(); // Kelsi - Fixed 
 		}
 		return result += "]";
 	}
