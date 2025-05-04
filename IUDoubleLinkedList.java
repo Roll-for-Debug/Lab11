@@ -241,18 +241,18 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 			remove.getNext().setPrevious(prev);
 		} else { // If the first element in the list
 			front = remove.getNext();
-			// front.setPrevious(null);
 		}
 		// If the last element in the list
 		if (remove.getNext() == null) {
-			// rear.setPrevious(null);
 			rear = prev;
+			rear.setNext(null);
 		}
 		count--;
 		modCount++;
 		// System.out.println(result);
 		return result;
 	}
+
     @Override
     public String toString() {
 		// Review Tyler
