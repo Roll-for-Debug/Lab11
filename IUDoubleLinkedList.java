@@ -232,19 +232,21 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         return count;
     }
 
-    private E removeElement(BidirectionalNode<E> previous, BidirectionalNode<E> current) { // given, don't much
+    private E removeElement(BidirectionalNode<E> prev, BidirectionalNode<E> remove) { // given, don't much
 		// Grab element
-		E result = current.getElement();
+		E result = remove.getElement();
 		// If not the first element in the list
-		if (previous != null) {
-			previous.setNext(current.getNext());
-			current.getNext().setPrevious(previous);
+		if (prev != null) {
+			prev.setNext(remove.getNext());
+			remove.getNext().setPrevious(prev);
 		} else { // If the first element in the list
-			front = current.getNext();
+			front = remove.getNext();
+			// front.setPrevious(null);
 		}
 		// If the last element in the list
-		if (current.getNext() == null) {
-			rear = previous;
+		if (remove.getNext() == null) {
+			// rear.setPrevious(null);
+			rear = prev;
 		}
 		count--;
 		modCount++;
@@ -353,6 +355,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 			next = previous;
 			previous = previous.getPrevious();
 			pointer--;
+			didNext = false;
 			didPrevious = true;
 			return jumped.getElement();
 		}
@@ -374,6 +377,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 			} else {
 				throw new IllegalStateException();
 			}
+			listIterModCount++;
 			set.setElement(e); // maybe previous
 		}
 
@@ -390,6 +394,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 			previous = next;
 			next = next.getNext();
 			pointer++;
+			didPrevious = false;
 			didNext = true;
 			return jumped.getElement();
 		}
