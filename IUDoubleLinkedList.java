@@ -68,11 +68,28 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
     }
 
     @Override
-    public void addAfter(E element, E target) { // Kelsi
-		if (isEmpty()) { throw new NoSuchElementException(); }
-		int index = indexOf(target);
-		if (index == -1) { throw new NoSuchElementException(); }
-		add(index + 1, element);
+    public void addAfter(E element, E target) { // Kelsi - Now 64 Failed tests I guess?
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        BidirectionalNode<E> current = front;
+        while (current != null && !current.getElement().equals(target)) {
+            current = current.getNext();
+        }
+        if (current == null) {
+            throw new NoSuchElementException();
+        }
+        BidirectionalNode<E> newNode = new BidirectionalNode<>(element);
+        newNode.setPrevious(current);
+        newNode.setNext(current.getNext());
+        if (current.getNext() != null) {
+            current.getNext().setPrevious(newNode);
+        } else {
+            rear = newNode;
+        }
+        current.setNext(newNode);
+        count++;
+        modCount++;
     }
 
 	public void add(int index, E element) {
@@ -153,9 +170,22 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
     }
 
     @Override
-    public E remove(int index) { // Kelsi
+    public E remove(int index) { // Kelsi ~ 65 Failing tests now??
 		// Checking index & if it is valid
-		return remove(get(index));
+		if (index < 0 || index >= count) {
+            throw new IndexOutOfBoundsException("Invalid index: " + index);
+        }
+        if (index == 0) {
+            return removeFirst();
+        } else if (index == count - 1) {
+            return removeLast();
+        } else {
+            BidirectionalNode<E> current = front;
+            for (int i = 0; i < index; i++) {
+                current = current.getNext();
+            }
+            return removeElement(current.getPrevious(), current);
+        }
     }
 
     @Override
@@ -264,6 +294,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 		// System.out.println(result);
 		return result;
 	}
+	
     @Override
     public String toString() {
 		// Review Tyler
