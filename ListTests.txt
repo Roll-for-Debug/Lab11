@@ -1,7 +1,5 @@
 Initial Test Plan for an IndexedUnsortedList
 
-Test to push** Kelsi
-
 #4,12,15,20: duplicate invalid addAfter()
 
 #15: remove(), set(), get(), contains()
