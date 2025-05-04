@@ -164,22 +164,35 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
     }
 
     @Override
-    public E get(int index) { // Colin
-        if (index < 0 || index > count) {
-			throw new IndexOutOfBoundsException();
-		}
-		BidirectionalNode<E> current = front;
-		int i = 0;
-		while (current != null && i < index) {
-			current = current.getNext();
-			i++;
-		}
-		if (current == null) {
-			throw new IndexOutOfBoundsException();
-		} // Not sure if this is necessary - Colin
-		modCount++;
-		return current.getElement();
+    // public E get(int index) { // Colin
+    //     if (index < 0 || index > count) {
+	// 		throw new IndexOutOfBoundsException();
+	// 	}
+	// 	BidirectionalNode<E> current = front;
+	// 	int i = 0;
+	// 	while (current != null && i < index) {
+	// 		current = current.getNext();
+	// 		i++;
+	// 	}
+	// 	if (current == null) {
+	// 		throw new IndexOutOfBoundsException();
+	// 	} // Not sure if this is necessary - Colin
+	// 	modCount++;
+	// 	return current.getElement();
+    // }
+
+	// Edit - Kelsi, 66 Failed tests now 
+	public E get(int index) {
+        if (index < 0 || index >= count) {
+            throw new IndexOutOfBoundsException("Invalid index: " + index);
+        }
+        BidirectionalNode<E> current = front;
+        for (int i = 0; i < index; i++) {
+            current = current.getNext();
+        }
+        return current.getElement();
     }
+
 
     @Override
     public int indexOf(E element) { // Zion
