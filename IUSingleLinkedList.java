@@ -310,13 +310,12 @@ public class IUSingleLinkedList<E> implements IndexedUnsortedList<E> {
 
 		@Override
 		public boolean hasNext() {
-			// TODO Kelsi
+			if (iterModCount != modCount) { throw new ConcurrentModificationException(); }
 			return next != null;
 		}
 
 		@Override
 		public E next() {
-			// TODO Tyra
 			if (iterModCount != modCount) { throw new ConcurrentModificationException(); }
 			if (next == null) { throw new NoSuchElementException(); }
 
@@ -327,13 +326,13 @@ public class IUSingleLinkedList<E> implements IndexedUnsortedList<E> {
 			} else {
 				next = null;
 			}
-			didNext = true; // Allow remove
-			// System.out.println("__CURRENT__:" + current.getElement());
+			didNext = true;
 			return current.getElement();
 		}
 
 		@Override
 		public void remove() { // Colin
+			if (iterModCount != modCount) { throw new ConcurrentModificationException(); }
 			if (!didNext) { throw new IllegalStateException(); }
 			if (current == front) {
 				removeFirst();
@@ -342,7 +341,7 @@ public class IUSingleLinkedList<E> implements IndexedUnsortedList<E> {
 			} else {
 				removeElement(previous, current);
 			}
-			didNext = false; // disallow remove until next, next()
+			didNext = false;
 			iterModCount++;
 		}
 	}

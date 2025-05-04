@@ -17,12 +17,12 @@
 
 - [x] 57 TODO Colin
 - [x] 60 TODO Zion
-- [ ] 66 TODO Tyler
+- [x] 66 TODO Tyler
 - [ ] 71 TODO Kelsi
 - [ ] 87 TODO Tyra
 - [ ] 90 TODO Colin
 - [x] 96 TODO Zion
-- [ ] 99 TODO Tyler
+- [x] 99 TODO Tyler
 
 ### Missed Scenarios
 
