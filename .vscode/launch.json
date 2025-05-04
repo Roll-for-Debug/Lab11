@@ -9,6 +9,13 @@
             "name": "ListTester",
             "request": "launch",
             "mainClass": "ListTester",
+            "projectName": "Lab11_5ae0d302"
+        },
+        {
+            "type": "java",
+            "name": "ListTester",
+            "request": "launch",
+            "mainClass": "ListTester",
             "projectName": "Lab11_4209dbac"
         },
         {
