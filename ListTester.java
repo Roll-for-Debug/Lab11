@@ -3154,8 +3154,7 @@ public class ListTester {
 			it2 = list.listIterator();
 			it1.next();
 			it1.set(ELEMENT_B);
-			printTest("A_ListIter1NextSetB_testListIter2Next",
-					testIterNext(it2, ELEMENT_A, Result.ConcurrentModification));
+			printTest("A_ListIter1NextSetB_testListIter2Next",testIterNext(it2, ELEMENT_A, Result.ConcurrentModification));
 			list = emptyList_addToFrontA_A();
 			it1 = list.listIterator();
 			it2 = list.listIterator();

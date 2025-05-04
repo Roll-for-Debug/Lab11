@@ -20,13 +20,11 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         BidirectionalNode<E> node = new BidirectionalNode<E>(element);
 		if (isEmpty()) {
 			front = rear = node;
-			count++;
-			modCount++;
-			return;
+		} else {
+			front.setPrevious(node);
+			node.setNext(front);
+			front = node;
 		}
-        front.setPrevious(node);
-		node.setNext(front);
-		front = node;
 		count++;
 		modCount++;
     }
@@ -36,13 +34,12 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
         BidirectionalNode<E> newNode = new BidirectionalNode<E>(element);
 		if (isEmpty()) {
 			front = rear = newNode;
-			count++;
 		} else {
 			rear.setNext(newNode);
             newNode.setPrevious(rear);
 			rear = newNode;
-			count++;
 		}
+		count++;
 		modCount++;
     }
 
@@ -112,23 +109,23 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
     @Override
     public E removeLast() { // Zion
         if (isEmpty()) { throw new NoSuchElementException(); }
-		modCount++;
-		E retval = rear.getElement();
+		E retVal = rear.getElement();
 		if (count == 1 ) {
 			front = rear = null;
 			count = 0;
-			return retval;
+			modCount++;
+			return retVal;
 		}
 		BidirectionalNode<E> pineappleOnPizza = rear.getPrevious();
 		pineappleOnPizza.setNext(null);
 		rear.setPrevious(null);
 		rear = pineappleOnPizza;
-		count --;
+		count--;
 		if (count == 1) {
 			rear = front;
 		}
-
-		return retval;
+		modCount++;
+		return retVal;
 
     }
 
@@ -152,6 +149,10 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 		return removeElement(previous, current);
     }
 
+	public E removeHelper(E element) { // Tyler
+        return remove(element);
+    }
+
     @Override
     public E remove(int index) { // Kelsi
 		// Checking index & if it is valid
@@ -161,7 +162,11 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
     @Override
     public void set(int index, E element) { // Tyra
 		findNodeIndex(index).setElement(element);
+		modCount++;
     }
+	private void setHelper(int index, E element) {
+		set(index, element);
+	}
 
     @Override
     public E get(int index) { // Colin
@@ -177,7 +182,6 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 		if (current == null) {
 			throw new IndexOutOfBoundsException();
 		} // Not sure if this is necessary - Colin
-		modCount++;
 		return current.getElement();
     }
 
@@ -245,7 +249,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 		// If the last element in the list
 		if (remove.getNext() == null) {
 			rear = prev;
-			rear.setNext(null);
+			// rear.setNext(null);
 		}
 		count--;
 		modCount++;
@@ -331,6 +335,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
 		@Override
 		public void add(E e) {
+			if (listIterModCount != modCount) { throw new ConcurrentModificationException(); }
 			iteratorAddAtIndex(pointer, e);
 			listIterModCount++;
 		}
@@ -350,6 +355,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
 		@Override
 		public E previous() {
+			if (listIterModCount != modCount) { throw new ConcurrentModificationException(); }
 			if (!hasPrevious()) { throw new NoSuchElementException(); }
 			jumped = previous;
 			next = previous;
@@ -377,8 +383,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 			} else {
 				throw new IllegalStateException();
 			}
-			listIterModCount++;
-			set.setElement(e); // maybe previous
+			setHelper(indexOf(set.getElement()), e);
 		}
 
 		@Override
@@ -389,6 +394,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
 		@Override
 		public E next() {
+			if (listIterModCount != modCount) { throw new ConcurrentModificationException(); }
 			if (!hasNext()) { throw new NoSuchElementException(); }
 			jumped = next;
 			previous = next;
@@ -401,6 +407,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 
 		@Override
 		public void remove() {
+			if (listIterModCount != modCount) { throw new ConcurrentModificationException(); }
 			BidirectionalNode<E> rmrf;
 			if (didNext) {
 				rmrf = previous;
@@ -421,7 +428,7 @@ public class IUDoubleLinkedList<E> implements IndexedUnsortedList<E> {
 				// 	rmrf.setPrevious(null); // with fire
 				// 	count--;
 				// }
-				removeElement(previous, rmrf);
+				removeHelper(rmrf.getElement());
 			}
 			didNext = didPrevious = false;
 			listIterModCount++;
