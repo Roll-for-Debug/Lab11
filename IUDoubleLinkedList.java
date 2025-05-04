@@ -365,16 +365,27 @@ private void iteratorAddAtIndex(int index, E element) {
     modCount++;
 }
 
+	// private BidirectionalNode<E> getNode(int index) {
+	// 	if (isEmpty() || index > count || index < 0) { return null; }
+	// 	BidirectionalNode<E> current = this.front, previous = null, next = null;
+	// 	int i = 0;
+	// 	while (current != null && i < index) {
+	// 		current = current.getNext();
+	// 		i++;
+	// 	}
+	// 	return current;
+	// }
+
 	private BidirectionalNode<E> getNode(int index) {
-		if (isEmpty() || index > count || index < 0) { return null; }
-		BidirectionalNode<E> current = this.front, previous = null, next = null;
-		int i = 0;
-		while (current != null && i < index) {
-			current = current.getNext();
-			i++;
-		}
-		return current;
-	}
+        if (index < 0 || index >= count) { // Changed the upper bound to >= count
+            throw new IndexOutOfBoundsException("Invalid index: " + index);
+        }
+        BidirectionalNode<E> current = front;
+        for (int i = 0; i < index; i++) { // Changed to a standard for loop
+            current = current.getNext();
+        }
+        return current;
+    }
 
     private class DLLListIterator implements ListIterator<E> {
 		private BidirectionalNode<E> previous;
@@ -477,15 +488,13 @@ private void iteratorAddAtIndex(int index, E element) {
 				removeFirst();
 			} else if (rmrf == rear) {
 				removeLast();
-			} else {
+			} else { // - Kelsi added in this section only 50 failing 
 				BidirectionalNode<E> prevNode = rmrf.getPrevious();
 				BidirectionalNode<E> nextNode = rmrf.getNext();
 				prevNode.setNext(nextNode);
 				nextNode.setPrevious(prevNode);
 				count--;
 			}
-			
-			
 			didNext = didPrevious = false;
 			listIterModCount++;
 		}
